@@ -2,7 +2,7 @@
 ﻿using System;
 using System.Text;
 using GameOverlay.Drawing;
-using GameOverlay.Windows;
+using GameOverlay.andriod;
 using SharpDX;
 using Point = GameOverlay.Drawing.Point;
 using Color = GameOverlay.Drawing.Color;
@@ -27,7 +27,7 @@ namespace PUBGMESP
     }
     public class AimbotForm : IAimbotForm
     {
-        public readonly OverlayWindow _window;
+        public readonly OverlayAndriod _andriod;
         private readonly Graphics _graphics;
         private readonly GameMemSearch _ueSearch;
 
@@ -59,24 +59,24 @@ namespace PUBGMESP
         {
             this._ueSearch = ueSearch;
 
-            _window = new OverlayWindow(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top)
+            _andriod = new Overlayandriod(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top)
             {
                 IsTopmost = true,
                 IsVisible = true
             };
 
-            _window.SizeChanged += _window_SizeChanged;
+            _andriod.SizeChanged += _andriod_SizeChanged;
 
             _graphics = new Graphics
             {
                 MeasureFPS = true,
-                Height = _window.Height,
+                Height = _andriod.Height,
                 PerPrimitiveAntiAliasing = true,
                 TextAntiAliasing = true,
                 UseMultiThreadedFactories = false,
                 VSync = true,
-                Width = _window.Width,
-                WindowHandle = IntPtr.Zero
+                Width = _andriod.Width,
+                AndriodHandle = IntPtr.Zero
             };
 
             // offset
@@ -95,7 +95,7 @@ namespace PUBGMESP
         {
             _window.CreateWindow();
 
-            _graphics.WindowHandle = _window.Handle;
+            _graphics.andriodHandle = _andriod.Handle;
             _graphics.Setup();
 
             _font = _graphics.CreateFont("Microsoft YaHei", 10);
@@ -351,7 +351,7 @@ namespace PUBGMESP
             MainForm.mouse_event(1, (int)TargetX, (int)(TargetY), 0, UIntPtr.Zero);
         }
 
-        private void _window_SizeChanged(object sender, OverlaySizeEventArgs e)
+        private void _andeiod_SizeChanged(object sender, OverlaySizeEventArgs e)
         {
             if (_graphics == null) return;
 
